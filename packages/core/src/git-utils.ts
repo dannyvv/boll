@@ -15,9 +15,9 @@ export function getRepoRoot(): string {
     repoRoot = resolve(execSync("git rev-parse --show-toplevel").toString().trim());
     return repoRoot;
   } catch (e) {
-    console.warn(e);
-    return process.cwd();
-  }
+    repoRoot = process.cwd();
+    console.warn(`Warning: Failed to execute git command to determ ine repo root. Using ${repoRoot}: ${e}`);
+    return repoRoot;
 }
 
 export async function getIgnoreFiles(cwd?: string, ignoreFileName?: string): Promise<string[]> {
